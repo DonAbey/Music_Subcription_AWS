@@ -73,7 +73,7 @@ The application is fully hosted on an AWS EC2 instance and utilizes various AWS 
 
 The complete source code for this project is available in the following GitHub repository:
 
-- [Music Subscription Service Repository](https://github.com/your-username/music-subscription-service)
+- [Music Subscription Service Repository](https://github.com/DonAbey/Music_Subcription_AWS.git)
 
 ## 📬 Contact
 
