@@ -1,0 +1,88 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #252839;
+    color: #FFF;
+}
+.user-area, h2, .caption, th {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background: #F2F2F2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    color: #333;
+}
+.user-area {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.query-area, .subscription-area {
+    margin-bottom: 20px;
+    text-align: center;
+}
+input[type="text"] {
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+}
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #FFF;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #45a049;
+}
+.results-area, .subscription-list {
+    width: 100%;
+    table-layout: fixed; /* Ensures that all columns are of equal width */
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    background-color: #FFF;
+    color: #333;
+}
+th {
+    background-color: #314056;
+    color: #FFF;
+}
+.subscribe-button, .remove-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.subscribe-button:hover {
+    background-color: #555;
+}
+.logout-link {
+    margin: 20px 0;
+    font-size: 1em;
+    color: #FFF;
+    text-align: center;
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+<div class="form-container">
+    <h2>Register</h2>
+    <form id="registrationForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
+
+        <button type="button" onclick="register()">Register</button>
+
+        <p id="message" style="color: red; text-align: center;"></p>
+    </form>
+</div>
+
+<script>
+    function register() {
+        //getting values from the input fields
+        var email = document.getElementById('email').value;
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        //checking for empty fields
+        if (!email || !username || !password) {
+            document.getElementById('message').innerHTML = "All fields are required.";
+            return;
+        }
+
+        // Validation for email format
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email pattern checker
+        if (!emailPattern.test(email)) {
+            document.getElementById('message').innerHTML = "Please enter a valid email address.";
+            return;
+        }
+
+        document.getElementById('message').innerHTML = "Registering...";
+
+        fetch('https://zcphb6nayi.execute-api.us-east-1.amazonaws.com/production/UserRegistration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, username: username, password: password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Debugging
+                if (data.message) {
+                    //alert(data.message);
+                    if (data.message === "Registration successful. Please login to continue.") {
+                        //new
+                        document.getElementById('message').innerHTML = "Registration Sucessful. Redirecting to Login Page";
+                        setTimeout(() =>{
+                            window.location.href = 'login.html'; // Redirect to login on successful registration
+                        },3000);
+                    }else {
+                        document.getElementById('message').innerHTML = data.message;
+                    }
+                } else {
+                    document.getElementById('message').innerHTML = "Registration failed due to server issues. Please try again";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error); // Log any errors that occur during the fetch
+                document.getElementById('message').innerHTML = "Error: " + error.message;
+            });
+    }
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        register();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Music Subscription Service</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+<div class="form-container">
+    <p class="caption">Explore Your Favorite Beats</p>
+    <h2>LOGIN</h2>
+    <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="button" onclick="login()">Login</button>
+        <button type="button" class="register-btn" onclick="window.location.href='register.html';">Register</button>
+
+        <p id="message" style="color: red; text-align: center;"></p>
+    </form>
+</div>
+
+<script>
+    function login() {
+        //getting values from the input placeholders
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        //validation for fields if empty
+        if(!email || !password){
+            document.getElementById('message').innerHTML = "All fields are required.";
+            return;
+        }
+
+        document.getElementById('message').innerHTML = 'Logging in...';
+
+        //calling UserLogin api for POST request
+        //Reference - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        fetch('https://4yknvmbsk5.execute-api.us-east-1.amazonaws.com/production/UserLogin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, password: password })
+
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Logging data to see the actual response
+                if (data.message) {
+                    //alert(data.message);
+                    if (data.message === "Login successful!") {
+                        sessionStorage.setItem('userName', data.userName);
+                        sessionStorage.setItem('userEmail', data.userEmail);
+                        //Reference - https://developer.mozilla.org/en-US/docs/Web/API/Window/location
+                        window.location.href = 'mainpage.html'; // Redirecting to mainpage on success
+                    }else{
+                        if (data.message === "Login failed: Incorrect email or password."){
+                            document.getElementById('message').innerHTML = "Login failed: Incorrect email or password.";
+                        }
+                    }
+                } else {
+                    alert('Unexpected response from the server');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            });
+    }
+    //making sure the form is submitted via js
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        login();
+    });
+</script>
+</body>
+</html>
